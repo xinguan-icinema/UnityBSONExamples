@@ -46,11 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BSONSender.cs" />
+     <Compile Include="Assets\BSONNetworking\BSONSender.cs" />
+     <Compile Include="Assets\BSONNetworking\SenderInterface.cs" />
+     <Compile Include="Assets\BSONNetworking\SimpleBSON.cs" />
+     <Compile Include="Assets\BSONNetworking\UDPSender.cs" />
      <Compile Include="Assets\BSONTestSender.cs" />
-     <Compile Include="Assets\SenderInterface.cs" />
-     <Compile Include="Assets\SimpleBSON.cs" />
-     <Compile Include="Assets\UDPSender.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 5.0.0b18/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

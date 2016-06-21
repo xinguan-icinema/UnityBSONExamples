@@ -4,6 +4,10 @@ using System.Text;
 
 using SimpleNetwork;
 
+/// <summary>
+/// Simple testing script that just sends whatever is in testSendString over UDP
+/// Can send either raw UDP or wrapped in a BSON object { "testValue": "This is a test string" }
+/// </summary>
 public class BSONTestSender : MonoBehaviour 
 {
 	public string ip = "127.0.0.1";
