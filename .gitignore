@@ -1,0 +1,29 @@
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+# Ignore Unity files
+.DS_Store
+Library
+Temp
+*.csproj
+*.pidb
+*.unityproj
+*.sln
+*.userprefs
+Project/Assets/smcs.rsp*
+Project/*.exe
+Project/*_Data
+Project/Assets/Models.meta
+Project/Assets/Models/
+Project/Assets/iLandTerrain/
+Project/Assets/iLandTerrain.meta
+*~
+Project/Assets/plugins/
+Project/W*.app
+*.swp
+Project/ProjectSettings/EditorBuildSettings.asset
+
+Assets/Plugins/*
+
+!/Assets/Plugins/ObjReader
