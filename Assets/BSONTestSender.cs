@@ -27,12 +27,16 @@ public class BSONTestSender : MonoBehaviour
 	
 	void Update()
 	{
+		// Sends the testSendString string whenever the sendNow checkbox is pressed
 		if (this.sendNow) 
 		{
 			this.sendNow = false;
+			
 			if (this.testSendRawUdp) {
+				// Send raw UDP straight from the udpSender
 				this.udpSender.SendBytes(Encoding.UTF8.GetBytes(this.testSendString));
 			} else {
+				// Wrap in a simple BSON object and send via the bsonSender
 				Kernys.Bson.BSONObject b = new Kernys.Bson.BSONObject();
 				b.Add("testValue", new Kernys.Bson.BSONValue(this.testSendString));
 				this.bsonSender.SendUncompressed(b);

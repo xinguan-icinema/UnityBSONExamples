@@ -24,6 +24,8 @@ public class BSONSender {
 	* b => length of uncompressed data
 	* a => 1 byte header
 	*
+	* NOTE: we have a version in our code that compresses the data as well,
+	* but we don't really use it much and just makes things more complicated
 	*/	
 	public void SendUncompressed(Kernys.Bson.BSONObject bsonObj)
 	{
