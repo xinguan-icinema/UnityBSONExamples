@@ -39,7 +39,7 @@ public class BSONTestSender : MonoBehaviour
 				// Wrap in a simple BSON object and send via the bsonSender
 				Kernys.Bson.BSONObject b = new Kernys.Bson.BSONObject();
 				b.Add("testValue", new Kernys.Bson.BSONValue(this.testSendString));
-				this.bsonSender.SendUncompressed(b);
+				this.bsonSender.Send(b);
 			}
 		}
 	}
