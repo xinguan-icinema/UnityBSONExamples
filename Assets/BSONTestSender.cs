@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
+using Kernys.Bson;
 using SimpleNetwork;
 
 /// <summary>
@@ -12,6 +14,7 @@ public class BSONTestSender : MonoBehaviour
 {
 	public string ip = "127.0.0.1";
 	public int port = 9898;
+	public int listenPort = 9899;
 	public bool testSendRawUdp;
 	public string testSendString = "";
 	public bool sendNow;
@@ -19,10 +22,22 @@ public class BSONTestSender : MonoBehaviour
 	UDPSender udpSender;
 	BSONInterface.BSONSender bsonSender;
 	
-	void Awake()
+	UDPListener udpListener;
+	
+	void OnEnable()
 	{
 		udpSender = new UDPSender(ip, port);
 		bsonSender = new BSONInterface.BSONSender(udpSender);
+		
+		this.udpListener = new UDPListener(this.listenPort);
+	}
+	
+	void OnDisable()
+	{
+		this.udpSender = null;
+		this.bsonSender = null;
+		this.udpListener.Stop();
+		this.udpListener = null;
 	}
 	
 	void Update()
@@ -42,5 +57,29 @@ public class BSONTestSender : MonoBehaviour
 				this.bsonSender.Send(b);
 			}
 		}
+		
+		byte[] received = this.udpListener.PopMessage();
+		if (received != null) {
+			Kernys.Bson.BSONObject inBson = Kernys.Bson.SimpleBSON.Load(received);
+			Debug.LogFormat("Received from remote:\n {0}", BsonObjectToString(inBson));
+		}
 	}
+	
+	string BsonObjectToString(BSONObject b)
+	{
+		string s = "";
+		foreach (string key in b.Keys)
+		{
+			BSONValue v = b[key];
+			string valStr;
+			if (v.valueType == BSONValue.ValueType.Object) {
+				valStr = BsonObjectToString((BSONObject)v);
+			} else {
+				valStr = v.stringValue;
+			}
+			s += string.Format("{0}: {1}\n", key, valStr);
+		}
+		return s;
+	}
+
 }

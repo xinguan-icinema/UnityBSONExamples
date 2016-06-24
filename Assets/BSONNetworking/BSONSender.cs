@@ -6,6 +6,10 @@ using SimpleNetwork;
 
 namespace BSONInterface {
 
+/// <summary>
+/// Doesn't really do much right now so maybe not necessary, but at some point
+/// it might need to do things like split up the bsonObj if it's too big etc 
+/// </summary>
 public class BSONSender {
 	
 	private SenderInterface messageSender;

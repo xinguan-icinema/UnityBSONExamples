@@ -46,9 +46,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AIInterfaceExample\AINetworkInterface.cs" />
+     <Compile Include="Assets\AIInterfaceExample\AbstractAIInterface.cs" />
+     <Compile Include="Assets\AIInterfaceExample\GameManager.cs" />
+     <Compile Include="Assets\AIInterfaceExample\Player.cs" />
      <Compile Include="Assets\BSONNetworking\BSONSender.cs" />
      <Compile Include="Assets\BSONNetworking\SenderInterface.cs" />
      <Compile Include="Assets\BSONNetworking\SimpleBSON.cs" />
+     <Compile Include="Assets\BSONNetworking\UDPListener.cs" />
      <Compile Include="Assets\BSONNetworking\UDPSender.cs" />
      <Compile Include="Assets\BSONTestSender.cs" />
  <Reference Include="UnityEngine.UI">
