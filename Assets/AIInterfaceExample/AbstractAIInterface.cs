@@ -10,6 +10,8 @@ namespace AIInterfaceExample {
 /// </summary>
 public abstract class AbstractAIInterface : MonoBehaviour 
 {
+	abstract public void UpdatePlayerCount(int count);
+	
 	abstract public void UpdatePlayerPosition(int id, Vector3 pos);
 	
 	// stuff like waving etc that could be represented as a simple string

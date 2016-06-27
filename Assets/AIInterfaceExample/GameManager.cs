@@ -20,7 +20,9 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	
-	void Start() {
+	void Start() 
+	{
+		this.aiInterface.UpdatePlayerCount(this.players.Count);
 		StartCoroutine(PeriodicAIUpdate());
 	}
 	

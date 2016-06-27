@@ -19,14 +19,36 @@ public class AINetworkInterface : AbstractAIInterface
 	UDPSender udpSender;
 	BSONInterface.BSONSender bsonSender;
 	
+	UDPListener udpListener;
+	
 	BSONArray updatesThisFrame = new BSONArray();
 
 	void OnEnable()
 	{
 		this.udpSender = new UDPSender(this.AIAddress, this.AIRemotePort);
 		bsonSender = new BSONInterface.BSONSender(udpSender);
+		
+		this.udpListener = new UDPListener(9899);
 	}
 	
+	void OnDisable()
+	{
+		this.udpListener.Stop();
+	}
+	
+	public override void UpdatePlayerCount (int count)
+	{
+		BSONObject obj = new BSONObject();
+		obj.Add("type", new BSONValue("player count"));
+		
+		BSONObject data = new BSONObject();
+		data.Add("count", new BSONValue(count));
+			
+		obj.Add("data", data);
+		
+		AddBsonUpdate(obj);
+	}
+		
 	public override void UpdatePlayerPosition (int id, Vector3 pos)
 	{
 		BSONObject obj = new BSONObject();
@@ -71,6 +93,11 @@ public class AINetworkInterface : AbstractAIInterface
 			b.Add("world", this.updatesThisFrame);
 			this.bsonSender.Send(b);
 			this.updatesThisFrame.Clear();
+		}
+		
+		byte[] data = udpListener.PopMessage();
+		if (data != null) {
+			Debug.Log(data.ToString());
 		}
 	}
 }
