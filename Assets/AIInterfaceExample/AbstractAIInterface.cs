@@ -4,9 +4,11 @@ using System.Collections;
 namespace AIInterfaceExample {
 
 /// <summary>
-/// Functions that an AI needs on the Unity side
-/// e.g you could implement a local C# AI for testing using this interface
-/// without changing anything else
+/// This interface represents the sort of information an AI might need as input (number of players,
+/// player positions, current player actions/gestures)
+///
+/// This abstraction means that e.g you could implement a local C# AI for testing using this 
+/// interface without changing anything else
 /// </summary>
 public abstract class AbstractAIInterface : MonoBehaviour 
 {
