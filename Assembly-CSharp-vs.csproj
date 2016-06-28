@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AIInterfaceExample\AICharacterScript.cs" />
      <Compile Include="Assets\AIInterfaceExample\AINetworkInterface.cs" />
      <Compile Include="Assets\AIInterfaceExample\AbstractAIInterface.cs" />
      <Compile Include="Assets\AIInterfaceExample\GameManager.cs" />

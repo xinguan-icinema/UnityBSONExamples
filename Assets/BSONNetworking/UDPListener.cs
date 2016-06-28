@@ -54,7 +54,7 @@ public class UDPListener
 		lock(queueLock) {
 			try {
 				data = this.messageQueue.Dequeue();
-			} catch (System.InvalidOperationException e) {
+			} catch (System.InvalidOperationException) {
 				// Queue was empty
 			}
 		}

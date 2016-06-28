@@ -22,6 +22,8 @@ public class AINetworkInterface : AbstractAIInterface
 	UDPListener udpListener;
 	
 	BSONArray updatesThisFrame = new BSONArray();
+	
+	GameManager gameManager;
 
 	void OnEnable()
 	{
@@ -34,6 +36,10 @@ public class AINetworkInterface : AbstractAIInterface
 	void OnDisable()
 	{
 		this.udpListener.Stop();
+	}
+	
+	public override void SetGameManager(GameManager gm) {
+		this.gameManager = gm;
 	}
 	
 	public override void UpdatePlayerCount (int count)
@@ -84,7 +90,59 @@ public class AINetworkInterface : AbstractAIInterface
 		this.updatesThisFrame.Add(obj);
 	}
 	
+	void Update()
+	{
+		ReceiveUpdatesFromAI();
+	}
+	
 	void LateUpdate()
+	{
+		// We want to wait until everything else has updated before 
+		// sending the latest updates to the AI
+		SendUpdatesToAI();
+	}	
+
+	void ReceiveUpdatesFromAI()
+	{
+		// Make sure we consume all the messages in the UDPListener queue,
+		// otherwise it could start to fill up if we are receiving more than
+		// 1 per frame. 
+		bool hasMessages = true;
+		while (hasMessages)
+		{
+			byte[] data = this.udpListener.PopMessage();
+			
+			if (data != null)
+			{
+				BSONObject obj = SimpleBSON.Load(data);
+				try 
+				{
+					BSONValue commandType = obj["type"];
+					
+					switch (commandType.stringValue) 
+					{
+						// There is only 1 possible command in this example
+						case "moveTo":
+							int id = obj["id"].int32Value;
+							float x = (float)obj["x"].doubleValue;
+							float y = (float)obj["y"].doubleValue;
+							
+							// Send the update to the GameManager
+							this.gameManager.AIMoveToCommand(id, x, y);
+							break;
+						
+					}
+				} catch (System.Exception e) {
+					Debug.LogError(e);
+				}
+			} else {
+				// No more messages this frame, exit the loop
+				hasMessages = false;
+			}
+		}
+	}
+	
+	void SendUpdatesToAI()
 	{
 		// Don't send an update if there is nothing to update
 		if (this.updatesThisFrame.Count > 0)
@@ -93,12 +151,7 @@ public class AINetworkInterface : AbstractAIInterface
 			b.Add("world", this.updatesThisFrame);
 			this.bsonSender.Send(b);
 			this.updatesThisFrame.Clear();
-		}
-		
-		byte[] data = udpListener.PopMessage();
-		if (data != null) {
-			Debug.Log(data.ToString());
-		}
-	}
+		}	
+	}	
 }
 }
