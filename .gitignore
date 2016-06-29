@@ -14,10 +14,7 @@ Temp
 Project/Assets/smcs.rsp*
 Project/*.exe
 Project/*_Data
-Project/Assets/Models.meta
-Project/Assets/Models/
-Project/Assets/iLandTerrain/
-Project/Assets/iLandTerrain.meta
+
 *~
 Project/Assets/plugins/
 Project/W*.app
